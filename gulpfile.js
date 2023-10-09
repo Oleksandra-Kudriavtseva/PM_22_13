@@ -1,78 +1,102 @@
-//Підключаємо gulp
-var gulp = require ("gulp");
-//Створюємо тестовий таск
-gulp.task ('testTask', function () {
- console.log ('This is a test task!');
-});
+const {
+    src,
+    dest,
+    parallel,
+    series,
+    watch
+} = require('gulp');
 
+// Load plugins
 
-var gulp = require ("gulp");
-//додаткові плагіни Gulp
-var sass = require ("gulp-sass"), //конвертує SASS в CSS
- cssnano = require ("gulp-cssnano"), //мінімізація CSS
- autoprefixer = require ('gulp-autoprefixer'), //додавання префіксів в
- //CSS для підтримки
- //старих браузерів
- imagemin = require ('gulp-imagemin'), //стиснення зображень
- concat = require ("gulp-concat"), //об'єднання файлів - конкатенація
- uglify = require ("gulp-uglify"), //мінімізація javascript
- rename = require ("gulp-rename"); //перейменування файлів
- 
- //копіювання HTML файлів в папку dist
-gulp.task ( "html", function () {
- return gulp.src ( "src / *. html")
- .pipe (gulp.dest ( "dist"));
-});
-//об'єднання, компіляція Sass в CSS, додавання префіксів і подальша
-мінімізація коду
-gulp.task ( "sass", function () {
- return gulp.src ( "src / sass / *. sass")
- .pipe (concat ( 'styles.sass'))
- .pipe (sass ())
- .pipe (autoprefixer ({
- browsers: [ 'last 2 versions'],
- cascade: false
- }))
- .pipe (cssnano ())
- .pipe (rename ({suffix: '.min'}))
- .pipe (gulp.dest ( "dist / css"));
-});
-//об'єднання і стиснення JS-файлів
-gulp.task ( "scripts", function () {
- return gulp.src ( "src / js / *. js") //вихідна директорія файлів
- .pipe (concat ( 'scripts.js')) // конкатенація js-файлів в один
- .pipe (uglify ()) //стиснення коду
- .pipe (rename ({suffix: '.min'})) //перейменування файлу з
- //приставкою .min
- .pipe (gulp.dest ( "dist / js")); // директорія продакшена
-});
-//cтискання зображень
-gulp.task ( 'imgs', function () {
- return gulp.src ( "src / images /*.+ (jpg | jpeg | png | gif)")
- .pipe (imagemin ({
- progressive: true,
- svgoPlugins: [{removeViewBox: false}],
- interlaced: true
- }))
- .pipe (gulp.dest ( "dist / images"))
-});
-//відстежування за змінами у файлах
-gulp.task ( "watch", function () {
- gulp.watch ( "src / *. html", [ "html"]);
- gulp.watch ( "src / js / *. js", [ "scripts"]);
- gulp.watch ( "src / sass / *. sass", [ "sass"]);
- gulp.watch ( "src / images /*.+ (jpg | jpeg | png | gif)", [ "imgs"]);
-});
-//Запуск тасків за замовчуванням
-gulp.task ( "default", [ "html", "sass", "scripts", "imgs", "watch","testTask"]);
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass')(require('sass'));
+const autoprefixer = require('gulp-autoprefixer');
+const cssnano = require('gulp-cssnano');
+const concat = require('gulp-concat');
+const clean = require('gulp-clean');
+const imagemin = require('gulp-imagemin');
+const changed = require('gulp-changed');
+const browsersync = require('browser-sync').create();
 
-var browserSync = require('browser-sync').create();
+// Clean assets
 
-// Static server
-gulp.task('browser-sync', function() {
-    browserSync.init({
+function clear() {
+    return src('./dist/*', {
+        read: false
+    })
+        .pipe(clean());
+}
+
+// JS function
+
+function js() {
+    const source = './app/js/*.js';
+
+    return src(source)
+        .pipe(changed(source))
+        .pipe(concat('bundle.js'))
+        .pipe(uglify())
+        .pipe(rename({
+            extname: '.min.js'
+        }))
+        .pipe(dest('./dist/js/'))
+        .pipe(browsersync.stream());
+}
+
+// CSS function
+
+function css() {
+    const source = './app/sass/main.scss';
+
+    return src(source)
+        .pipe(changed(source))
+        .pipe(sass())
+        .pipe(autoprefixer({
+            overrideBrowserslist: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(rename({
+            extname: '.min.css'
+        }))
+        .pipe(cssnano())
+        .pipe(dest('./dist/css/'))
+        .pipe(browsersync.stream());
+}
+
+// Optimize images
+
+function img() {
+    return src('./app/img/*')
+        .pipe(imagemin())
+        .pipe(dest('./dist/img'));
+}
+
+function html() {
+    return src('./app/*.html')
+        .pipe(dest('./dist'));
+}
+// Watch files
+
+function watchFiles() {
+    watch('./app/scss/*', css);
+    watch('./app/js/*', js);
+    watch('./app/img/*', img);
+    watch('./app/*', html);
+}
+
+// BrowserSync
+
+function browserSync() {
+    browsersync.init({
         server: {
-            baseDir: "./"
-        }
+            baseDir: './dist'
+        },
+        port: 3000
     });
-});
+}
+
+// Tasks to define the execution of the functions simultaneously or in series
+
+exports.watch = parallel(watchFiles, browserSync);
+exports.default = series(clear, parallel(js, css, img, html), browserSync, watchFiles);
