@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script language="JavaScript" src="js/main.js"></script>
 </head>
 
 
@@ -43,36 +44,36 @@
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
-                <li class="nav-item mx-2">
+                <li class="nav-item mx-4">
                     <a class="nav-link bi-fullscreen"></a>
                 </li>
-                <li class="nav-item mx-2 position-relative">
+                <li class="nav-item mx-4 position-relative">
                     <a class="nav-link bi-envelope"></a>
                     <span class="position-absolute top-0 start-100 translate-middle p-2 bg-warning rounded-circle">
     <span class="visually-hidden ">New alerts</span>
   </span>
                 </li>
-                <li class="nav-item mx-2 position-relative">
+                <li class="nav-item mx-4 position-relative">
                     <a class="nav-link bi-bell"></a>
                     <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle">
     <span class="visually-hidden">New alerts</span>
   </span>
                 </li>
 
-                <li class="nav-item mx-2 ">
+                <li class="nav-item mx-4 ">
                     <a class="nav-link bi-power"></a>
 
                 </li>
 
-                <li class="nav-item mx-2">
-                    <a class="nav-link bi-water"></a>
+                <li class="nav-item mx-4">
+                    <a class="nav-link bi-justify"></a>
                 </li>
             </ul>
 
         </div>
     </div>
 </nav>
-<div class="d-flex flex-row bg-info">
+<div class="d-flex flex-row bg-white">
     <div class="sidebar  " style="width:280px; height:100vh">
 
         <div>
@@ -158,7 +159,15 @@
     Project
 </span>
             <hr class="bg-dark  mx-auto" style="width:225px">
-            <button class="btn position-relative top-0 start-50 translate-middle-x fw-bold " type="button" style="color:white; font-size:14px; height:50px; width:225px; background: -webkit-linear-gradient(#e685f2,#9572f7);
+            <ul id="projectlist" class="list-group">
+
+            </ul>
+            <div style="display:none" id="addproject" class="form-floating mb-3">
+                <input  class="form-control" id="floatingInput" placeholder="projectname">
+                <label for="floatingInput">Project name</label>
+            </div>
+
+            <button onclick="addProject()" class="btn position-relative top-0 start-50 translate-middle-x fw-bold " type="button" style="color:white; font-size:14px; height:50px; width:225px; background: -webkit-linear-gradient(#e685f2,#9572f7);
 
   ">+ Add a Project
             </button>
@@ -192,9 +201,9 @@
         </div>
     </div>
 
-    <div class=" d-flex flex-column bg-warning   w-100">
+    <div id="Body" class=" d-flex flex-column  w-100" style="background-color:#e3dfeb ">
 
-        <div class="  float-start w-100 bg-danger ">
+        <div class="  float-start w-100  ">
             <div class="d-flex flex-row m-4">
                 <div class=" rounded  text-center position-relative "
                      style="width:35px; height:35px; background: -webkit-linear-gradient(left,#e685f2,#9572f7)">
@@ -202,31 +211,191 @@
                        style="color:white "></i>
                 </div>
                 <span class="  flex-fill fw-bold fs-5 mx-3">Dashboard</span>
-                <div class="  ms-auto mx-1 ">
+                <div id="overview" onclick="myFunction()" class="  ms-auto mx-1 ">
                 <span >Overview</span>
                 <i class=" bi bi-info-circle  "
                    style="background: -webkit-linear-gradient(left,#e685f2,#9572f7);-webkit-background-clip: text;-webkit-text-fill-color: transparent;"></i>
                 </div>
             </div>
         </div>
-        <div class="    bg-success  mx-4">
-            <div class="position-relative">
-                <div class=" position-absolute top-0 start-0" style="width:32%;height: 210px;background-image:url(./img/assets/RoundedRectangle1.png); background-repeat:no-repeat; background-size: cover">
-                    <div class="m-4 bg-light d-flex flex-column">
-                        <div class="m-2">hdfhdfh</div>
-                        <div class="m-2">gdfhfhdfh</div>
-                        <div class="m-2">gfdgdfgfd</div>
+        <div class=" mx-4">
+            <div class="d-flex justify-content-between">
+                <div class="rounded  " style="width:32%;height: 210px;background-image:url(./img/assets/RoundedRectangle1.png); background-repeat:no-repeat; background-size: cover">
+                    <div class="m-4 d-flex flex-column  text-white ">
+                        <div class="mx-2 fs-5">Weekly Sales
+                            <a class="bi bi-graph-up float-end h3" style="color:white "></a>
+                        </div>
+                        <div class="m-2 fs-2 fw-bold">$ 15,0000</div>
+                        <div class="m-2 mt-4 fs-5">Increased by 60%</div>
                     </div>
                 </div>
-                <div class=" position-absolute top-0 start-50 translate-middle-x" style="width:32%;height: 210px;background-image:url(./img/assets/RoundedRectangle1copy6.png); background-repeat:no-repeat; background-size: 100% 100%">
-                    gfdgdfgdfg
+                <div class="rounded " style="width:32%;height: 210px;background-image:url(./img/assets/RoundedRectangle1copy6.png); background-repeat:no-repeat; background-size: 100% 100%">
+                    <div class="m-4 d-flex flex-column  text-white ">
+                    <div class="mx-2 fs-5">Weekly Orders
+                        <a class="bi bi-bookmark float-end h3" style="color:white "></a>
+                    </div>
+                    <div class="m-2 fs-2 fw-bold">49,5057</div>
+                    <div class="m-2 mt-4 fs-5">Decreased by 10%</div>
+                    </div>
                 </div>
-                <div class="position-absolute top-0 end-0 " style="width:32%;height: 210px;;background-image:url(./img/assets/RoundedRectangle1copy7.png); background-repeat:no-repeat; background-size: 100% 100%">
-                    gdfgdgf
+                <div class=" rounded" style="width:32%;height: 210px;;background-image:url(./img/assets/RoundedRectangle1copy7.png); background-repeat:no-repeat; background-size: 100% 100%">
+                    <div class="m-4 d-flex flex-column  text-white ">
+                        <div class="mx-2 fs-5">Visitors Online
+                            <a class="bi bi-gem float-end h3" style="color:white "></a>
+                        </div>
+                        <div class="m-2 fs-2 fw-bold">95,5741</div>
+                        <div class="m-2 mt-4 fs-5">Increased by 5%</div>
+                    </div>
                 </div>
             </div>
         </div>
+     <div class=" m-4  position-relative" style="height:500px; background-color:#e3dfeb " >
+         <div class="rounded bg-white position-absolute start-0 " style="width:66%; height: 100%"></div>
+         <div class="bg-white position-absolute end-0" style="width:32%;height: 100%" ></div>
+     </div>
+     <div id="RecentTickets" class=" m-4 bg-white rounded" style="">
+          <div class="m-5 fs-4 fw-bold" >Recent Tickets</div>
 
+
+         <div class="m-5  ">
+             <table class="table  align-middle border-light ">
+                 <thead>
+                 <tr>
+                     <th scope="col">Assignee</th>
+                     <th scope="col">Subject</th>
+                     <th scope="col">Status</th>
+                     <th scope="col">Last update</th>
+                     <th scope="col">Tracking ID</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 <tr>
+                     <td > <img src="img/assets/Layer 528.png" class="rounded-circle img-responsive"
+                                           style="width:50px;height:50px" alt="..."> David Grey</td>
+                     <td>Funds is not received</td>
+                     <td ><div id="DONE" class=" text-center  rounded  text-white" style="width:35%; background: -webkit-linear-gradient(left,#79d9c2,#04ba8e)">
+                         DONE
+                     </div></td>
+                     <td>26 jun 2017</td>
+                     <td>WD-12345</td>
+                 </tr>
+                 <tr>
+                     <td> <img src="img/assets/Layer 527.png" class="rounded-circle img-responsive"
+                                           style="width:50px;height:50px" alt="..."> Stella Johnson</td>
+                     <td>Assign a new task Design Purpleadmin</td>
+                     <td><div id="PROGRESS" class=" text-center  rounded  text-white" style="width:50%; background: -webkit-linear-gradient(left,#fced60,#ffe817)">
+                         PROGRESS
+                     </div></td>
+                     <td>27 jun 2017</td>
+                     <td>WD-12346</td>
+                 </tr>
+
+                 <tr>
+                     <td > <img src="img/assets/Layer 526.png" class="rounded-circle img-responsive"
+                                           style="width:50px;height:50px" alt="..."> Marina Michel</td>
+                     <td >Website down for one week</td>
+                     <td><div id="ONHOLD" class=" text-center  rounded  text-white" style="width:50%; background: -webkit-linear-gradient(left,#7ac6ff,#278edb)">
+                         ON HOLD
+                     </div></td>
+                     <td>28 jun 2017</td>
+                     <td>WD-12347</td>
+                 </tr>
+                 <tr>
+                     <td> <img src="img/assets/Layer 525.png" class="rounded-circle img-responsive"
+                                           style="width:50px;height:50px" alt="..."> John Doe</td>
+                     <td >Understanding dashboard problems</td>
+                     <td><div id="REJECTED" class=" text-center  rounded  text-white" style="width:50%; background: -webkit-linear-gradient(left,#ff969d,#e33974)">
+                         PEJECTED
+                     </div></td>
+                     <td>29 jun 2017</td>
+                     <td>WD-12347</td>
+                 </tr>
+
+                 </tbody>
+             </table>
+         </div>
+
+     </div>
+        <div class=" m-4 bg-white position-relative rounded" style="">
+            <div class="m-5">
+            <div class=" fs-4 fw-bold" >Recent Updates</div>
+            <div class="my-2 d-flex text-muted">
+                <i class="bi bi-person "></i>
+                <spam class="mx-4">Jack Menqu</spam>
+                 <div class="mx-4">
+                <i class="mx-3 bi bi-clock-history"></i>
+                <spam >october 3th, 2018</spam>
+                 </div>
+
+            </div>
+                <div class=" ">
+
+
+                    <div class="d-flex flex-row justify-content-between mb-3 ">
+                        <div class="w-50 "><img src="./img/assets/Layer 766.png" class=" w-100 rounded" style=""></div>
+                        <div class="w-50 ms-3"><img src="./img/assets/Layer 765.png" class="w-100 rounded" style=""></div>
+
+                    </div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="w-50"><img src="./img/assets/Layer 767.png" class="w-100 rounded" style=""></div>
+                        <div class="w-50 ms-3"><img src="./img/assets/Layer 768.png" class="w-100 rounded" style=""></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex m-5 row">
+                <div class="col ">
+                    <img src="img/assets/Layer 512@4x.png"
+                         class="rounded-circle"
+                         style="width:50px;height:50px" alt="...">
+                </div>
+                <div class="col">
+                    <div class="row "><b>School Website - Authentication Module</b></div>
+                    <div class="row" ><p class=" text-black-50 fs-6 ">It is a long established fact that a reader will be distracted by the readable content of the page.</p></div>
+                </div>
+            </div>
+        </div>
+        <div class="m-4 bg-white rounded ">
+            <table class="m-5 table border-light">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Progress</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Herman Beck</td>
+                    <td>May 15, 2015</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Messsy Adam</td>
+                    <td>Jul 01, 2015</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td >John Richards</td>
+                    <td>Apr 12, 2015</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td >Ashton Coui</td>
+                    <td>May 15, 2015</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td >Daniel Russe</td>
+                    <td>May 03, 2015</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
