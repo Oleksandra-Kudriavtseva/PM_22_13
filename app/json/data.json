@@ -1,0 +1,51 @@
+[
+  {
+    "month": "JAN",
+    "USA": 10,
+    "China": 25,
+    "UK": 25
+  },
+  {
+    "month": "FEB",
+    "USA": 25,
+    "China": 20,
+    "UK": 5
+  },
+  {
+    "month": "MAR",
+    "USA": 23,
+    "China": 18,
+    "UK": 14
+  },
+  {
+    "month": "APR",
+    "USA": 13,
+    "China": 25,
+    "UK": 16
+  },
+  {
+    "month": "MAY",
+    "USA": 22,
+    "China": 13,
+    "UK": 15
+  },
+  {
+    "month": "JUN",
+    "USA": 20,
+    "China": 13,
+    "UK": 15
+  },
+  {
+    "month": "JUL",
+    "USA": 28,
+    "China": 13,
+    "UK": 14
+  }
+,
+  {
+    "month": "AUG",
+    "USA": 28,
+    "China": 14,
+    "UK": 14
+  }
+]

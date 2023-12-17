@@ -1,9 +1,12 @@
-document.querySelector('body')
-function myFunction() {
+
+
+window.myFunction=function()
+  {
     //document.getElementById("overview").style.backgroundColor = "red";
-    alert("Text");
+    alert("This is overview of site");
 }
-function addProject(){
+window.addProject=function()
+ {
     var addproject=document.getElementById("addproject");
     if (addproject.style.display=="none"){
         addproject.style.display="block";

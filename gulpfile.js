@@ -67,22 +67,33 @@ function css() {
 // Optimize images
 
 function img() {
-    return src('./app/img/*')
+    return src('./app/img/*/**')
         .pipe(imagemin())
         .pipe(dest('./dist/img'));
+}
+
+function chart_js() {
+    return src('./node_modules/chart.js/dist/chart.umd.js')
+        .pipe(dest('./dist/js'));
 }
 
 function html() {
     return src('./app/*.html')
         .pipe(dest('./dist'));
 }
+function json() {
+    return src('./app/json/*.json')
+        .pipe(dest('./dist/json'));
+}
 // Watch files
+
 
 function watchFiles() {
     watch('./app/scss/*', css);
     watch('./app/js/*', js);
     watch('./app/img/*', img);
     watch('./app/*', html);
+    watch('./app/json/*', json);
 }
 
 // BrowserSync
@@ -99,4 +110,4 @@ function browserSync() {
 // Tasks to define the execution of the functions simultaneously or in series
 
 exports.watch = parallel(watchFiles, browserSync);
-exports.default = series(clear, parallel(js, css, img, html), browserSync, watchFiles);
+exports.default = series(clear, parallel(js, chart_js, css, img, html, json), browserSync, watchFiles);
